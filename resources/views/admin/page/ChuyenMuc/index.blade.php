@@ -141,7 +141,6 @@
                 if (paramObj.hasOwnProperty(kv.name)) {
                     paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
                     paramObj[kv.name].push(kv.value);
-                    $('#formdata').trigger("reset");
                     this.loadData();
                 } else {
                     paramObj[kv.name] = kv.value;
@@ -149,11 +148,14 @@
             });
 
             axios
-                .post('/admin/chuyen-muc/create', paramObj)
-                .then((res) => {
-                    if(res.data.xxx) {
+            .post('/admin/chuyen-muc/create', paramObj)
+            .then((res) => {
+                if(res.data.xxx) {
                         toastr.success(res.data.message);
+                        $("#formdata").trigger("reset");
                         this.loadData();
+                        this.ten_chuyen_muc='';
+                        this.slug='';
                     }
                 })
                 .catch((res) => {
@@ -162,6 +164,7 @@
                     });
                 });
         },
+
 
         updateChuyenMuc(){
             axios
@@ -179,11 +182,6 @@
                     });
                 });
         },
-
-        ResetForm(){
-            this.add.name = '';
-        },
-
         changeStatus(id){
             axios
                 .get('/admin/chuyen-muc/change-status/' + id)

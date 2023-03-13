@@ -31,4 +31,37 @@ class SanPhamController extends Controller
             'data'      => $data,
         ]);
     }
+
+    public function destroy(Request $request)
+    {
+        SanPham::where('id', $request->id)->delete();
+
+        return response()->json([
+            'status'    => true,
+            'message'   => 'Đã xóa sản phẩm thành công!',
+        ]);
+
+    }
+
+    public function update(Request $request)
+    {
+        $data    = $request->all();
+        $sanPham = SanPham::find($request->id); // where('id', $request->id)->first();
+        $sanPham->update($data);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => 'Đã cập nhật phẩm thành công!',
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $data = SanPham::where('ten_san_pham', 'like', '%' . $request->search_sp_serve . '%')
+                       ->get();
+
+        return response()->json([
+            'data'  => $data,
+        ]);
+    }
 }

@@ -44,3 +44,9 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::post('/update', [SanPhamController::class, 'update']);
     });
 });
+
+
+
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

@@ -9,9 +9,9 @@
             </div>
             <div class="card-body">
                 <label>Tên Sản Phẩm</label>
-                <input v-model="sp_add.ten_san_pham" class="form-control mt-1" type="text">
+                <input v-model="ten_san_pham" v-on:keyup="chuyenThanhSlug()" class="form-control mt-1" type="text">
                 <label>Slug Sản Phẩm</label>
-                <input v-model="sp_add.slug_san_pham" class="form-control mt-1" type="text">
+                <input v-model="slug" name="slug_san_pham" class="form-control mt-1" type="text">
 
                 <label>Hình Ảnh</label>
                 <div class="input-group">
@@ -24,7 +24,7 @@
                 </div>
                 <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                 <label>Mô tả</label>
-                <input v-model="sp_add.mo_ta" class="form-control mt-1" type="text">
+                <input v-model="sp_add.mo_ta" name="mo_ta" class="form-control mt-1" type="text">
                 <label>Giá bán</label>
                 <input v-model="sp_add.gia_ban" class="form-control mt-1" type="number">
                 <label>Giá khuyến mãi</label>
@@ -194,20 +194,26 @@
 @section('js')
 <script>
     new Vue({
-        el      :'#app',
-        data    :{
-            sp_add          :{},
-            listChuyenMuc   :[],
-            listSanPham     :[],
-            sp_delete       :{},
-            sp_edit         :{},
-        },
-        created(){
+    el      :   '#app',
+    data    :   {
+        sp_add        : {},
+        listChuyenMuc : [],
+        listSanPham   : [],
+        sp_delete     : {},
+        sp_edit       : {},
+        slug          : '',
+        ten_san_pham  : '',
+    },
+    created()   {
+        this.loadChuyenMuc();
+        this.loadSanPham();
+    },
+    methods :   {
+        add() {
+            this.sp_add.mo_ta = CKEDITOR.instances['mo_ta'].getData();
+            paramObj['mo_ta'] = CKEDITOR.instances['mo_ta'].getData();
 
-        },
-        methods: {
-            add() {
-                axios
+            axios
                 .post('/admin/san-pham/create', this.sp_add)
                 .then((res) => {
                     if(res.data.status) {
@@ -223,10 +229,80 @@
                         toastr.error(v[0]);
                     });
                 });
-            },
+        },
+        loadChuyenMuc() {
+            axios
+                .get('/admin/chuyen-muc/data')
+                .then((res) => {
+                    this.listChuyenMuc = res.data.list;
+                });
+        },
+        loadSanPham() {
+            axios
+                .get('/admin/san-pham/data')
+                .then((res) => {
+                    this.listSanPham = res.data.data;
+                });
+        },
+        stringToArray(str) {
+            return str.split(",");
+        },
+        deleteSanPham() {
+            axios
+                .post('/admin/san-pham/delete', this.sp_delete)
+                .then((res) => {
+                    toastr.success(res.data.message);
+                    this.loadSanPham();
+                })
+                .catch((res) => {
+                    $.each(res.response.data.errors, function(k, v) {
+                        toastr.error(v[0]);
+                    });
+                });
+        },
+        updateSanPham() {
+            this.sp_edit.hinh_anh = $("#WatchThis").val();
+            axios
+                .post('/admin/san-pham/update', this.sp_edit)
+                .then((res) => {
+                    if(res.data.status) {
+                        toastr.success(res.data.message);
+                        this.loadSanPham();
+                    }
+                })
+                .catch((res) => {
+                    $.each(res.response.data.errors, function(k, v) {
+                        toastr.error(v[0]);
+                    });
+                });
+        },
+        edit(v) {
+            this.sp_edit = v;
+            CKEDITOR.instances['mo_ta_edit'].setData(v.mo_ta);
+        },
+        toSlug(str) {
+            str = str.toLowerCase();
+            str = str
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
+            str = str.replace(/[đĐ]/g, 'd');
+            str = str.replace(/([^0-9a-z-\s])/g, '');
+            str = str.replace(/(\s+)/g, '-');
+            str = str.replace(/-+/g, '-');
+            str = str.replace(/^-+|-+$/g, '');
+
+            return str;
+        },
+        chuyenThanhSlug()
+        {
+            this.slug  = this.toSlug(this.ten_san_pham);
+        },
+        chuyenThanhSlugEdit()
+        {
+            this.edit.slug_san_pham = this.toSlug(this.edit.ten_san_pham);
         }
-    })
-</script>
+    },
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
 <script>
