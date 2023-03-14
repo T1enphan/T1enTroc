@@ -15,6 +15,7 @@ class SanPham extends Model
         'hinh_anh',
         'mo_ta',
         'id_chuyen_muc',
-        'trang_thai'
+        'trang_thai',
+        'gia_ban'
     ];
 }

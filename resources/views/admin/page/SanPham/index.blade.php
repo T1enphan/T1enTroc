@@ -9,13 +9,13 @@
             </div>
             <div class="card-body">
                 <label>Tên Sản Phẩm</label>
-                <input v-model="ten_san_pham" v-on:keyup="chuyenThanhSlug()" class="form-control mt-1" type="text">
+                <input v-model="ten_san_pham" name="ten_san_pham" v-on:keyup="chuyenThanhSlug()" class="form-control mt-1" type="text">
                 <label>Slug Sản Phẩm</label>
                 <input v-model="slug" name="slug_san_pham" class="form-control mt-1" type="text">
 
                 <label>Hình Ảnh</label>
                 <div class="input-group">
-                    <input v-model="sp_add.hinh_anh" id="hinh_anh" class="form-control" type="text" name="filepath">
+                    <input name="hinh_anh" id="hinh_anh" class="form-control" type="text" >
                     <span class="input-group-prepend">
                         <a id="lfm" data-input="hinh_anh" data-preview="holder" class="btn btn-primary">
                             <i class="fa fa-picture-o"></i> Choose
@@ -24,20 +24,20 @@
                 </div>
                 <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                 <label>Mô tả</label>
-                <input v-model="sp_add.mo_ta" name="mo_ta" class="form-control mt-1" type="text">
+                <input  name="mo_ta" class="form-control mt-1" type="text">
                 <label>Giá bán</label>
-                <input v-model="sp_add.gia_ban" class="form-control mt-1" type="number">
+                <input name="gia_ban" class="form-control mt-1" type="number">
                 <label>Giá khuyến mãi</label>
-                <input v-model="sp_add.gia_khuyen_mai" class="form-control mt-1" type="number">
+                <input name="gia_khuyen_mai" class="form-control mt-1" type="number">
                 <label>Chuyên mục</label>
-                <select v-model="sp_add.id_chuyen_muc" class="form-control mt-1">
+                <select name="id_chuyen_muc" class="form-control mt-1">
                     <template v-for="(v, k) in listChuyenMuc">
                         {{-- Nếu không phải là text mà là giá trị --}}
                         <option v-bind:value="v.id">@{{ v.ten_chuyen_muc }}</option>
                     </template>
                 </select>
                 <label>Tình trạng</label>
-                <select v-model="sp_add.trang_thai"class="form-control">
+                <select name="trang_thai" class="form-control">
                     <option value="1">Còn kinh doanh</option>
                     <option value="0">Dừng kinh doanh</option>
                 </select>
@@ -210,11 +210,20 @@
     },
     methods :   {
         add() {
-            this.sp_add.mo_ta = CKEDITOR.instances['mo_ta'].getData();
+            // this.sp_add.mo_ta = CKEDITOR.instances['mo_ta'].getData();
+            var paramObj = {};
+            $.each($('#formdata').serializeArray(), function(_, kv) {
+                if (paramObj.hasOwnProperty(kv.name)) {
+                    paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+                    paramObj[kv.name].push(kv.value);
+                } else {
+                    paramObj[kv.name] = kv.value;
+                }
+            });
             paramObj['mo_ta'] = CKEDITOR.instances['mo_ta'].getData();
-
+            console.log(paramObj);
             axios
-                .post('/admin/san-pham/create', this.sp_add)
+                .post('/admin/san-pham/create', paramObj)
                 .then((res) => {
                     if(res.data.status) {
                         toastr.success(res.data.message);

@@ -14,7 +14,6 @@ class SanPhamController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
         SanPham::create($data);
 
         return response()->json([
