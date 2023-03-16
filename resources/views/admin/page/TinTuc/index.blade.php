@@ -14,10 +14,10 @@
                 <input v-model="slug" name="slug_san_pham" class="form-control mt-1" type="text">
                 <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                 <label>Mô tả chi tiết</label>
-                <input  name="mo_ta" class="form-control mt-1" type="text">
+                <input  name="mo_ta_chi_tiet" class="form-control mt-1" type="text">
                 <label>Mô tả ngắn</label>
-                <input  name="mo_ta" class="form-control mt-1" type="text">
-                <label>Chuyên mục</label>
+                <input  name="mo_ta_ngan" class="form-control mt-1" type="text">
+                <label>Chuyên mục bài viết</label>
                 <select name="id_chuyen_muc" class="form-control mt-1">
                     <template v-for="(v, k) in listChuyenMuc">
                         {{-- Nếu không phải là text mà là giá trị --}}
@@ -112,5 +112,10 @@
 
         }
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('mo_ta_chi_tiet');
+    CKEDITOR.replace('edit_mo_ta_chi_tiet');
 </script>
 @endsection
