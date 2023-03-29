@@ -5,6 +5,7 @@ use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TinTucController;
+use App\Models\DanhMuc;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,11 +51,14 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/change-status/{id}', [TinTucController::class, 'changeStatus']);
     });
     Route::group(['prefix' => '/danh-muc'], function() {
-        Route::get('/',         [DanhMucController::class, 'index']);
-        Route::get('/data',     [DanhMucController::class, 'getData']);
-        Route::post('/create',  [DanhMucController::class, 'create']);
-        Route::post('/delete',  [DanhMucController::class, 'delete']);
-        Route::post('/update',  [DanhMucController::class, 'update']);
+        Route::get('/index',                [DanhMucController::class,'index']);
+        Route::post('/create',              [DanhMucController::class, 'store']);
+        Route::get('/change-status/{id}',   [DanhMucController::class, 'changeStatus']);
+        Route::get('/data',                 [DanhMucController::class, 'data']);
+        Route::get('/doi-trang-thai/{id}',  [DanhMucController::class, 'doiTrangThai']);
+        Route::get('/delete/{id}',          [DanhMucController::class, 'destroy']);
+        Route::get('/edit/{id}',            [DanhMucController::class, 'edit']);
+        Route::post('/update',              [DanhMucController::class, 'update']);
     });
 });
 
