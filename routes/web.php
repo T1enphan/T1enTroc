@@ -54,7 +54,7 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/index',                [DanhMucController::class,'index']);
         Route::post('/create',              [DanhMucController::class, 'store']);
         Route::get('/change-status/{id}',   [DanhMucController::class, 'changeStatus']);
-        Route::get('/data',                 [DanhMucController::class, 'data']);
+        Route::get('/data',                 [DanhMucController::class, 'getData']);
         Route::get('/doi-trang-thai/{id}',  [DanhMucController::class, 'doiTrangThai']);
         Route::get('/delete/{id}',          [DanhMucController::class, 'destroy']);
         Route::get('/edit/{id}',            [DanhMucController::class, 'edit']);

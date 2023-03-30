@@ -58,7 +58,7 @@
                             <td class="align-middle">@{{ value.ten_danh_muc_cha == null ? 'Root' : value.ten_danh_muc_cha }}</td>
                             <td class="text-center">
                                 <button class="btn btn-primary" v-on:click="edit = value" data-bs-toggle="modal" data-bs-target="#editModal">Cập nhật</button>
-                                <button class="btn btn-danger" v-on:click="edit = value" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+                                <button class="btn btn-danger"  v-on:click="del = value" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
                             </td>
                         </tr>
 
@@ -72,7 +72,7 @@
                             </div>
                             <div class="modal-body">
                             <input class="form-control" type="hidden" id="delete_id" placeholder="Nhập vào id cần xóa">
-                            <p>Bạn hãy chắc chắn là sẽ xóa Chuyên Mục này. Việc này không thể hoàn tác!</p>
+                            <p >Bạn hãy chắc chắn là sẽ xóa <a class="text-danger">@{{del.ten_danh_muc}}</a> này. Việc này không thể hoàn tác!</p>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -85,24 +85,24 @@
                         <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header bg-primary">
-                            <h5 class="modal-title text-white" id="exampleModalLabel">Cập Nhật Chuyên Mục</h5>
+                            <h5 class="modal-title text-white" id="exampleModalLabel">Cập Nhật Danh Mục</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <label>Tên Chuyên Mục</label>
-                                <input class="form-control mt-1" v-on:keyup="chuyenThanhSlugEdit()" v-model="edit.ten_chuyen_muc" type="text">
+                                <input class="form-control mt-1" v-on:keyup="chuyenThanhSlugEdit()" v-model="edit.ten_danh_muc" type="text">
                                 <label class="mt-3">Slug Chuyên Mục</label>
-                                <input class="form-control mt-1" v-model="edit.slug_chuyen_muc" type="text">
+                                <input class="form-control mt-1" v-model="edit.slug_danh_muc" type="text">
                                 <label class="mt-3">Tình Trạng</label>
                                 <select class="form-control mt-1" v-model="edit.tinh_trang">
                                     <option value="1">Hiển Thị</option>
                                     <option value="0">Tạm Tắt</option>
                                 </select>
-                                <label class="mt-3">Chuyên Mục Cha</label>
+                                <label class="mt-3">Danh Mục Cha</label>
                                 <select v-model="edit.id_chuyen_muc_cha" class="form-control mt-1">
                                     <option value="0">Root</option>
                                     <template v-for="(value, key) in listDanhMuc">
-                                        <option v-bind:value="value.id" v-if="value.id_chuyen_muc_cha == 0">@{{ value.ten_danh_muc }}</option>
+                                        <option v-bind:value="value.id" v-if="value.id_danh_muc_cha == 0">@{{ value.ten_danh_muc }}</option>
                                     </template>
                                 </select>
                             </div>
@@ -124,17 +124,17 @@
     new Vue({
     el      :   '#app',
     data    :   {
-        listDanhMuc       : [],
+        listDanhMuc         : [],
         edit                : {},
+        del                 : {},
         slug                : '',
-        ten_danh_muc      : '',
+        ten_danh_muc        : '',
     },
     created()   {
         this.loadData();
-        this.loadChuyenMucCha();
+        // this.loadDanhMucCha();
     },
     methods :   {
-
         add() {
             var paramObj = {};
             $.each($('#formdata').serializeArray(), function(_, kv) {
@@ -154,7 +154,7 @@
                         toastr.success(res.data.message);
                         $("#formdata").trigger("reset");
                         this.loadData();
-                        this.ten_chuyen_muc='';
+                        this.ten_danh_muc='';
                         this.slug='';
                     }
                 })
@@ -164,8 +164,6 @@
                     });
                 });
         },
-
-
         updateChuyenMuc(){
             axios
                 .post('/admin/danh-muc/update', this.edit)
@@ -210,7 +208,7 @@
 
         deleteChuyenMuc(){
             axios
-                .get('/admin/danh-muc/delete/' + this.edit.id)
+                .get('/admin/danh-muc/delete/' + this.del.id)
                 .then((res) => {
                     if(res.data.status) {
                         toastr.success(res.data.message);
@@ -243,11 +241,9 @@
 
             return str;
         },
-
         chuyenThanhSlug(){
             this.slug = this.toSlug(this.ten_danh_muc);
         },
-
         chuyenThanhSlugEdit(){
             this.edit.slug_danh_muc = this.toSlug(this.edit.ten_danh_muc);
         }

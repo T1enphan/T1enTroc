@@ -36,4 +36,31 @@ class DanhMucController extends Controller
             ]);
         }
     }
+    public function store(Request $request){
+        DanhMuc::create([
+            'ten_danh_muc'          => $request->ten_danh_muc,
+            'slug_danh_muc'         => $request->slug_danh_muc,
+            'tinh_trang'            => $request->tinh_trang,
+            'id_danh_muc_cha'       => $request->id_danh_muc_cha,
+        ]);
+        return response()->json([
+            'xxx' => true,
+            'message'=>'Danh Mục Đã Được Thêm Mới'
+        ]);
+    }
+    public function destroy($id){
+        $danhMuc = DanhMuc::find($id);
+        if($danhMuc) {
+            $danhMuc->delete();
+            return response()->json([
+                'status' => true,
+                'message'=>'Danh Mục Đã Được Xóa'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message'=>'Danh Mục không tồn tại'
+            ]);
+        }
+    }
 }
