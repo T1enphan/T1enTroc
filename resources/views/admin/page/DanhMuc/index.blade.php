@@ -21,7 +21,7 @@
                     <select class="selectt form-control mt-1" name="id_danh_muc_cha">
                         <option value="0">Root</option>
                         <template v-for="(value, key) in listDanhMuc">
-                            <option v-bind:value="value.id" v-if="value.id_danh_muc_cha == 0">@{{ value.ten_chuyen_muc }}</option>
+                            <option v-bind:value="value.id" v-if="value.id_danh_muc_cha == 0">@{{ value.ten_danh_muc }}</option>
                         </template>
                     </select>
                 </div>

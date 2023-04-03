@@ -17,5 +17,6 @@ class TinTuc extends Model
         'mo_ta_chi_tiet',
         'loai_bai_viet',
         'trang_thai',
+        'id_danh_muc'
     ];
 }

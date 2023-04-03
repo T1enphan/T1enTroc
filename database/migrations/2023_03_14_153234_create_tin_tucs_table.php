@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('hinh_anh');
             $table->longText('mo_ta_ngan');
             $table->longText('mo_ta_chi_tiet');
-            $table->integer('loai_bai_viet');
+            $table->integer('loai_bai_viet')->nullable();
             $table->integer('trang_thai');
             $table->timestamps();
         });
