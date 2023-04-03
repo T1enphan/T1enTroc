@@ -42,6 +42,41 @@ class SanPhamController extends Controller
 
     }
 
+    public function changeStatus($id)
+    {
+        $sanPham = SanPham::where('id',$id)->first();
+        if($sanPham)
+        {
+            $sanPham->trang_thai = !$sanPham->trang_thai;
+            $sanPham->save();
+            return response()->json([
+                'status'     => true,
+                'message'    => 'Đã đổi trạng thái thành công'
+            ]);
+        } else {
+            return response()->json([
+                'status'    => false,
+                'message'   => 'Đã có lỗi'
+            ]);
+        }
+    }
+
+    public function doiTrangThai($id){
+        $sanPham = SanPham::where('id',$id)->first();
+        if($sanPham) {
+            $sanPham->trang_thai = !$sanPham->trang_thai;
+            $sanPham->save();
+
+            return response()->json([
+                'status' => 'ABC',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'XYZ',
+            ]);
+        }
+    }
+
     public function update(Request $request)
     {
         $data    = $request->all();

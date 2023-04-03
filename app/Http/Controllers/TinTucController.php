@@ -35,7 +35,7 @@ class TinTucController extends Controller
         ]);
     }
 
-    public function show(TinTuc $tinTuc)
+    public function changeStatus(TinTuc $tinTuc)
     {
         //
     }

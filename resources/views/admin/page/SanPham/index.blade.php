@@ -100,12 +100,8 @@
                                 <td class="align-middle">@{{ v.gia_ban }}</td>
                                 <td class="align-middle text-nowrap">@{{ v.ten_chuyen_muc }}</td>
                                 <td class="align-middle text-nowrap">
-                                    <template v-if="v.trang_thai">
-                                        <button class="btn btn-primary">Còn Kinh Doanh</button>
-                                    </template>
-                                    <template v-else>
-                                        <button class="btn btn-warning">Dừng Kinh Doanh</button>
-                                    </template>
+                                    <button v-on:click="changeStatus(v.id)" class="btn btn-primary" v-if="v.trang_thai == 1">Còn Kinh Doanh</button>
+                                    <button v-on:click="changeStatus(v.id)" class="btn btn-warning" v-else>Dừng Kinh Doanh</button>
                                 </td>
                                 <td class="text-center align-middle text-nowrap">
                                     <button v-on:click="edit(v)" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-info">Cập Nhật</button>
@@ -124,7 +120,7 @@
                             </div>
                             <div class="modal-body">
                                 <form id="formdataedit" v-on:submit.prevent="update()">
-                                    <input v-model="sp_edit.id" class="form-control mt-1" type="text">
+                                    <input v-model="sp_edit.id" class="form-control mt-1" type="hidden">
                                     <label>Tên Sản Phẩm</label>
                                     <input v-model="sp_edit.ten_san_pham" class="form-control mt-1" type="text">
                                     <label>Slug Sản Phẩm</label>
@@ -309,7 +305,19 @@
         chuyenThanhSlugEdit()
         {
             this.edit.slug_san_pham = this.toSlug(this.edit.ten_san_pham);
-        }
+        },
+        changeStatus(id){
+            axios
+                .get('/admin/san-pham/change-status/' + id)
+                .then((res) => {
+                    if(res.data.status) {
+                        toastr.success(res.data.message);
+                        this.loadSanPham();
+                    }else{
+                        toastr.success(res.data.message);
+                    }
+                })
+        },
     },
 });
 </script>

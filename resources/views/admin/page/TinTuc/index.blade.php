@@ -33,7 +33,6 @@
                                 <template v-if="v.tinh_trang == 1">
                                     <option v-bind:value="v.id">@{{ v.ten_danh_muc }}</option>
                                 </template>
-                                {{-- Nếu không phải là text mà là giá trị --}}
                             </template>
                         </select>
                         <label>Tình trạng</label>
