@@ -28,10 +28,12 @@
                         <label>Mô tả ngắn</label>
                         <input name="mo_ta_ngan" class="form-control mt-1" type="text">
                         <label>Danh mục bài viết</label>
-                        <select name="id_chuyen_muc" class="form-control mt-1">
+                        <select name="id_danh_muc" class="form-control mt-1">
                             <template v-for="(v, k) in listDanhMuc">
+                                <template v-if="v.tinh_trang == 1">
+                                    <option v-bind:value="v.id">@{{ v.ten_danh_muc }}</option>
+                                </template>
                                 {{-- Nếu không phải là text mà là giá trị --}}
-                                <option v-bind:value="v.id">@{{ v.ten_danh_muc }}</option>
                             </template>
                         </select>
                         <label>Tình trạng</label>
@@ -108,7 +110,7 @@
                                     <td class="text-center align-middle text-nowrap">
                                         <button data-bs-toggle="modal" data-bs-target="#updateModal"
                                             class="btn btn-info">Cập Nhật</button>
-                                        <button data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        <button v-on:click="tt_delete = v" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                             class="btn btn-danger">Xóa Bỏ</button>
                                     </td>
                                 </tr>
@@ -124,12 +126,12 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Bạn có chắc chắn muốn xóa sản phẩm: <b>"xxx"</b> này không?
+                                        Bạn có chắc chắn muốn xóa tiêu đề <b>"@{{ tt_delete.tieu_de }}"</b>này không?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác
+                                        <button v-on:click="deleteTinTuc()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác
                                             Nhận</button>
                                     </div>
                                 </div>
@@ -151,6 +153,7 @@
                 tt_add: {},
                 slug : '',
                 tieu_de : '',
+                tt_delete:{},
             },
             created() {
                 this.loadDanhMuc();
@@ -187,11 +190,28 @@
                             });
                         });
                 },
+                stringToArray(str) {
+                    return str.split(",");
+                },
                 loadDanhMuc() {
                     axios
                         .get('/admin/danh-muc/data')
                         .then((res)=>{
                             this.listDanhMuc = res.data.list;
+                        });
+                },
+                deleteTinTuc(){
+                    axios
+                        .post('/admin/tin-tuc/delete', this.tt_delete)
+                        .then((res) => {
+                            toastr.success(res.data.message);
+                            this.loadTinTuc();
+                            console.log(this.tt_delete);
+                        })
+                        .catch((res) => {
+                            $.each(res.response.data.errors, function(k, v) {
+                                toastr.error(v[0]);
+                            });
                         });
                 },
                 loadTinTuc(){

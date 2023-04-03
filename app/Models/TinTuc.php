@@ -15,7 +15,6 @@ class TinTuc extends Model
         'hinh_anh',
         'mo_ta_ngan',
         'mo_ta_chi_tiet',
-        'loai_bai_viet',
         'trang_thai',
         'id_danh_muc'
     ];

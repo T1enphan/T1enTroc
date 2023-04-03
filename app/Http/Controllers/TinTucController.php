@@ -15,6 +15,7 @@ class TinTucController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $data = $request->all();
         TinTuc::create($data);
 
@@ -51,8 +52,13 @@ class TinTucController extends Controller
     }
 
 
-    public function destroy(TinTuc $tinTuc)
+    public function destroy(Request $request)
     {
-        //
+        TinTuc::where('id', $request->id)->delete();
+
+        return response()->json([
+            'status'    => true,
+            'message'   => 'Đã xóa tin tức thành công!',
+        ]);
     }
 }
