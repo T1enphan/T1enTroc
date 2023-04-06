@@ -99,7 +99,7 @@
                                 </td>
                                 <td class="align-middle">@{{ v.gia_ban }}</td>
                                 <td class="align-middle text-nowrap">@{{ v.ten_chuyen_muc }}</td>
-                                <td class="align-middle text-nowrap">
+                                <td class="align-middle text-nowrap text-center">
                                     <button v-on:click="changeStatus(v.id)" class="btn btn-primary" v-if="v.trang_thai == 1">Còn Kinh Doanh</button>
                                     <button v-on:click="changeStatus(v.id)" class="btn btn-warning" v-else>Dừng Kinh Doanh</button>
                                 </td>
@@ -122,7 +122,7 @@
                                 <form id="formdataedit" v-on:submit.prevent="update()">
                                     <input v-model="sp_edit.id" class="form-control mt-1" type="hidden">
                                     <label>Tên Sản Phẩm</label>
-                                    <input v-model="sp_edit.ten_san_pham" class="form-control mt-1" type="text">
+                                    <input v-model="sp_edit.ten_san_pham" v-on:keyup="chuyenThanhSlugEdit()" class="form-control mt-1" type="text">
                                     <label>Slug Sản Phẩm</label>
                                     <input v-model="sp_edit.slug_san_pham" class="form-control mt-1" type="text">
 
@@ -304,7 +304,7 @@
         },
         chuyenThanhSlugEdit()
         {
-            this.edit.slug_san_pham = this.toSlug(this.edit.ten_san_pham);
+            this.sp_edit.slug_san_pham = this.toSlug(this.sp_edit.ten_san_pham);
         },
         changeStatus(id){
             axios

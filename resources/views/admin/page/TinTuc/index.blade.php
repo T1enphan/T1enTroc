@@ -136,6 +136,58 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Sản Phẩm</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formdataedit" v-on:submit.prevent="update()">
+                                        <input v-model="sp_edit.id" class="form-control mt-1" type="hidden">
+                                        <label>Tên Sản Phẩm</label>
+                                        <input v-model="sp_edit.ten_san_pham" v-on:keyup="chuyenThanhSlugEdit()" class="form-control mt-1" type="text">
+                                        <label>Slug Sản Phẩm</label>
+                                        <input v-model="sp_edit.slug_san_pham" class="form-control mt-1" type="text">
+
+                                        <label>Hình Ảnh</label>
+                                        <div class="input-group">
+                                            <input v-model="sp_edit.hinh_anh" id="iloveu" class="form-control" type="text" name="filepath">
+                                            <span class="input-group-prepend">
+                                                <a id="lfm_edit" data-input="iloveu" data-preview="iloveu2" class="btn btn-primary">
+                                                    <i class="fa fa-picture-o"></i> Choose
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div id="iloveu2" style="margin-top:15px;max-height:100px;"></div>
+                                        <label>Mô tả</label>
+                                        <input v-model="sp_edit.mo_ta" name="mo_ta_edit" class="form-control mt-1" type="text">
+                                        <label>Giá bán</label>
+                                        <input v-model="sp_edit.gia_ban" class="form-control mt-1" type="number">
+                                        <label>Giá khuyến mãi</label>
+                                        <input v-model="sp_edit.gia_khuyen_mai" class="form-control mt-1" type="number">
+                                        <label>Chuyên mục</label>
+                                        <select v-model="sp_edit.id_chuyen_muc" class="form-control mt-1">
+                                            <template v-for="(v, k) in listChuyenMuc">
+                                                {{-- Nếu không phải là text mà là giá trị --}}
+                                                <option v-bind:value="v.id">@{{ v.ten_chuyen_muc }}</option>
+                                            </template>
+                                        </select>
+                                        <label>Tình trạng</label>
+                                        <select name="trang_thai"class="form-control">
+                                            <option value="1">Còn kinh doanh</option>
+                                            <option value="0">Dừng kinh doanh</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button v-on:click="updateSanPham()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác Nhận</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </table>
                 </div>
             </div>
