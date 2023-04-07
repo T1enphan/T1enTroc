@@ -68,31 +68,38 @@
                         <tbody>
                             <template v-for="(v, k) in listTinTuc">
                                 <tr>
-                                    <th class="text-center align-middle">@{{k+1}}</th>
-                                    <td class="align-middle">@{{v.tieu_de}}</td>
+                                    <th class="text-center align-middle">@{{ k + 1 }}</th>
+                                    <td class="align-middle">@{{ v.tieu_de }}</td>
                                     <td class="align-middle">
-                                        <div v-bind:id="'carouselExampleControls' + v.id" class="carousel slide" data-bs-ride="carousel">
+                                        <div v-bind:id="'carouselExampleControls' + v.id" class="carousel slide"
+                                            data-bs-ride="carousel">
                                             <div class="carousel-inner">
                                                 <template v-for="(v1, k1) in stringToArray(v.hinh_anh)">
                                                     <template v-if="k1 == 0">
                                                         <div class="carousel-item active">
-                                                            <img style="height: 200px" v-bind:src="v1" class="d-block w-100" alt="...">
+                                                            <img style="height: 200px" v-bind:src="v1" class="d-block w-100"
+                                                                alt="...">
                                                         </div>
                                                     </template>
                                                     <template v-else>
                                                         <div class="carousel-item">
-                                                            <img style="height: 200px" v-bind:src="v1" class="d-block w-100" alt="...">
+                                                            <img style="height: 200px" v-bind:src="v1" class="d-block w-100"
+                                                                alt="...">
                                                         </div>
                                                     </template>
                                                 </template>
                                             </div>
-                                            <button class="carousel-control-prev" type="button" v-bind:data-bs-target="'#carouselExampleControls' + v.id" data-bs-slide="prev">
-                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                              <span class="visually-hidden">Previous</span>
+                                            <button class="carousel-control-prev" type="button"
+                                                v-bind:data-bs-target="'#carouselExampleControls' + v.id"
+                                                data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
                                             </button>
-                                            <button class="carousel-control-next" type="button" v-bind:data-bs-target="'#carouselExampleControls' + v.id" data-bs-slide="next">
-                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                              <span class="visually-hidden">Next</span>
+                                            <button class="carousel-control-next" type="button"
+                                                v-bind:data-bs-target="'#carouselExampleControls' + v.id"
+                                                data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
                                             </button>
                                         </div>
                                     </td>
@@ -104,13 +111,13 @@
                                             <button class="btn btn-warning">Tạm Tắt</button>
                                         </template>
                                     </td>
-                                    <td class="align-middle text-nowrap">@{{v.mo_ta_ngan}}</td>
-                                    <td class="align-middle text-nowrap">@{{v.ten_danh_muc}}</td>
+                                    <td class="align-middle text-nowrap">@{{ v.mo_ta_ngan }}</td>
+                                    <td class="align-middle text-nowrap">@{{ v.ten_danh_muc }}</td>
                                     <td class="text-center align-middle text-nowrap">
-                                        <button data-bs-toggle="modal" data-bs-target="#updateModal"
+                                        <button data-bs-toggle="modal" v-on:click="edit(v)" data-bs-target="#updateModal"
                                             class="btn btn-info">Cập Nhật</button>
-                                        <button v-on:click="tt_delete = v" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                            class="btn btn-danger">Xóa Bỏ</button>
+                                        <button v-on:click="tt_delete = v" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal" class="btn btn-danger">Xóa Bỏ</button>
                                     </td>
                                 </tr>
                             </template>
@@ -130,62 +137,69 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button v-on:click="deleteTinTuc()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác
+                                        <button v-on:click="deleteTinTuc()" type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Xác
                                             Nhận</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Sản Phẩm</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="formdataedit" v-on:submit.prevent="update()">
-                                        <input v-model="sp_edit.id" class="form-control mt-1" type="hidden">
-                                        <label>Tên Sản Phẩm</label>
-                                        <input v-model="sp_edit.ten_san_pham" v-on:keyup="chuyenThanhSlugEdit()" class="form-control mt-1" type="text">
-                                        <label>Slug Sản Phẩm</label>
-                                        <input v-model="sp_edit.slug_san_pham" class="form-control mt-1" type="text">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Tin Tức</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formdataedit" v-on:submit.prevent="update()">
+                                            <input v-model="tt_edit.id" class="form-control mt-1" type="hidden">
+                                            <label>Tiêu Đề</label>
+                                            <input v-model="tt_edit.tieu_de" v-on:keyup="chuyenThanhSlugEdit()"
+                                                class="form-control mt-1" type="text">
+                                            <label>Slug Tiêu Đề</label>
+                                            <input v-model="tt_edit.slug_bai_viet" class="form-control mt-1"
+                                                type="text">
 
-                                        <label>Hình Ảnh</label>
-                                        <div class="input-group">
-                                            <input v-model="sp_edit.hinh_anh" id="iloveu" class="form-control" type="text" name="filepath">
-                                            <span class="input-group-prepend">
-                                                <a id="lfm_edit" data-input="iloveu" data-preview="iloveu2" class="btn btn-primary">
-                                                    <i class="fa fa-picture-o"></i> Choose
-                                                </a>
-                                            </span>
-                                        </div>
-                                        <div id="iloveu2" style="margin-top:15px;max-height:100px;"></div>
-                                        <label>Mô tả</label>
-                                        <input v-model="sp_edit.mo_ta" name="mo_ta_edit" class="form-control mt-1" type="text">
-                                        <label>Giá bán</label>
-                                        <input v-model="sp_edit.gia_ban" class="form-control mt-1" type="number">
-                                        <label>Giá khuyến mãi</label>
-                                        <input v-model="sp_edit.gia_khuyen_mai" class="form-control mt-1" type="number">
-                                        <label>Chuyên mục</label>
-                                        <select v-model="sp_edit.id_chuyen_muc" class="form-control mt-1">
-                                            <template v-for="(v, k) in listChuyenMuc">
-                                                {{-- Nếu không phải là text mà là giá trị --}}
-                                                <option v-bind:value="v.id">@{{ v.ten_chuyen_muc }}</option>
-                                            </template>
-                                        </select>
-                                        <label>Tình trạng</label>
-                                        <select name="trang_thai"class="form-control">
-                                            <option value="1">Còn kinh doanh</option>
-                                            <option value="0">Dừng kinh doanh</option>
-                                        </select>
-                                    </form>
+                                            <label>Hình Ảnh</label>
+                                            <div class="input-group">
+                                                <input v-model="tt_edit.hinh_anh" id="iloveu" class="form-control"
+                                                    type="text" name="filepath">
+                                                <span class="input-group-prepend">
+                                                    <a id="lfm_edit" data-input="iloveu" data-preview="iloveu2"
+                                                        class="btn btn-primary">
+                                                        <i class="fa fa-picture-o"></i> Choose
+                                                    </a>
+                                                </span>
+                                            </div>
+                                            <div id="iloveu2" style="margin-top:15px;max-height:100px;"></div>
+                                            <label>Mô tả chi tiết</label>
+                                            <input v-model="tt_edit.edit_mo_ta_chi_tiet" name="edit_mo_ta_chi_tiet" class="form-control mt-1"
+                                                type="text">
+                                            <label>Mô tả ngắn</label>
+                                            <input v-model="tt_edit.mo_ta_ngan" class="form-control mt-1" type="text">
+                                            <label>Danh mục</label>
+                                            <select v-model="tt_edit.id_danh_muc" class="form-control mt-1">
+                                                <template v-for="(v, k) in listDanhMuc">
+                                                    <option v-bind:value="v.id">@{{ v.ten_danh_muc }}</option>
+                                                </template>
+                                            </select>
+                                            <label>Tình trạng</label>
+                                            <select name="trang_thai"class="form-control">
+                                                <option value="1">Còn kinh doanh</option>
+                                                <option value="0">Dừng kinh doanh</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button v-on:click="updateTinTuc()" type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Xác Nhận</button>
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button v-on:click="updateSanPham()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Xác Nhận</button>
-                                </div>
-                            </div>
                             </div>
                         </div>
                     </table>
@@ -199,12 +213,13 @@
         new Vue({
             el: '#app',
             data: {
-                listTinTuc: [],
-                listDanhMuc: [],
-                tt_add: {},
-                slug : '',
-                tieu_de : '',
-                tt_delete:{},
+                listTinTuc  : [],
+                listDanhMuc : [],
+                tt_add      : {},
+                slug        : '',
+                tieu_de     : '',
+                tt_delete   : {},
+                tt_edit     : {},
             },
             created() {
                 this.loadDanhMuc();
@@ -212,7 +227,6 @@
             },
             methods: {
                 add() {
-                    // this.sp_add.mo_ta = CKEDITOR.instances['mo_ta'].getData();
                     var paramObj = {};
                     $.each($('#formdata').serializeArray(), function(_, kv) {
                         if (paramObj.hasOwnProperty(kv.name)) {
@@ -247,11 +261,31 @@
                 loadDanhMuc() {
                     axios
                         .get('/admin/danh-muc/data')
-                        .then((res)=>{
+                        .then((res) => {
                             this.listDanhMuc = res.data.list;
                         });
                 },
-                deleteTinTuc(){
+                edit(v) {
+                    this.tt_edit = v;
+                    CKEDITOR.instances['edit_mo_ta_chi_tiet'].setData(v.mo_ta_chi_tiet);
+                },
+                updateTinTuc() {
+                    this.tt_edit.hinh_anh = $("#WatchThis").val();
+                    axios
+                        .post('/admin/tin-tuc/update', this.tt_edit)
+                        .then((res) => {
+                            if(res.data.status) {
+                                toastr.success(res.data.message);
+                                this.loadTinTuc();
+                            }
+                        })
+                        .catch((res) => {
+                            $.each(res.response.data.errors, function(k, v) {
+                                toastr.error(v[0]);
+                            });
+                        });
+                },
+                deleteTinTuc() {
                     axios
                         .post('/admin/tin-tuc/delete', this.tt_delete)
                         .then((res) => {
@@ -265,10 +299,10 @@
                             });
                         });
                 },
-                loadTinTuc(){
+                loadTinTuc() {
                     axios
                         .get('/admin/tin-tuc/data')
-                        .then((res)=>{
+                        .then((res) => {
                             this.listTinTuc = res.data.data;
                         });
                 },
@@ -288,20 +322,25 @@
                 chuyenThanhSlug() {
                     this.slug = this.toSlug(this.tieu_de);
                 },
+                chuyenThanhSlugEdit() {
+                    this.tt_edit.slug_bai_viet = this.toSlug(this.tt_edit.tieu_de);
+                },
             }
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('mo_ta_chi_tiet');
-        // CKEDITOR.replace('edit_mo_ta_chi_tiet');
+        CKEDITOR.replace('edit_mo_ta_chi_tiet');
     </script>
     <script>
         var route_prefix = "/laravel-filemanager";
     </script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
-        $("#lfm").filemanager('image', {prefix : route_prefix});
+        $("#lfm").filemanager('image', {
+            prefix: route_prefix
+        });
         // $("#lfm_edit").filemanager('image', {prefix : route_prefix});
     </script>
 @endsection

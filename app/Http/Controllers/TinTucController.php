@@ -46,9 +46,17 @@ class TinTucController extends Controller
     }
 
 
-    public function update(Request $request, TinTuc $tinTuc)
+    public function update(Request $request)
     {
-        //
+        dd($request->all());
+        $data = $request->all();
+        $tinTuc = TinTuc::where('id',$request->id);
+        $tinTuc->update($data);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => 'Đã cập nhật tin tức thành công'
+        ]);
     }
 
 
