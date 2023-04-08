@@ -35,9 +35,39 @@ class TinTucController extends Controller
         ]);
     }
 
-    public function changeStatus(TinTuc $tinTuc)
+    public function changeStatus($id)
     {
-        //
+        $tinTuc = TinTuc::where('id',$id)->first();
+        if($tinTuc){
+            $tinTuc->trang_thai = !$tinTuc->trang_thai;
+            $tinTuc->save();
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Đổi trạng thái thành công'
+            ]);
+        } else {
+            return response()->json([
+                'status'    => false,
+                'message'   => 'Đã có lỗi'
+            ]);
+        }
+    }
+
+    public function doiTrangThai($id){
+        $tinTuc = TinTuc::where('id',$id)->first();
+        if($tinTuc) {
+            $tinTuc->trang_thai = !$tinTuc->trang_thai;
+            $tinTuc->save();
+
+            return response()->json([
+                'status'    => 'CC'
+            ]);
+        } else {
+            return response()->json([
+                'status'    => 'XX'
+            ]);
+        }
     }
 
     public function edit(TinTuc $tinTuc)
@@ -48,9 +78,9 @@ class TinTucController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $data = $request->all();
-        $tinTuc = TinTuc::where('id',$request->id);
+        $tinTuc = TinTuc::find($request->id);
         $tinTuc->update($data);
 
         return response()->json([

@@ -48,6 +48,7 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/data',               [TinTucController::class, 'data']);
         Route::post('/delete',            [TinTucController::class, 'destroy']);
         Route::post('/update',            [TinTucController::class, 'update']);
+        Route::get('/doi-trang-thai/{id}',[TinTucController::class, 'doiTrangThai']);
         Route::get('/change-status/{id}', [TinTucController::class, 'changeStatus']);
     });
     Route::group(['prefix' => '/danh-muc'], function() {
