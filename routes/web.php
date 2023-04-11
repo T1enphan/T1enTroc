@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChuyenMucController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\KhuVucController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TinTucController;
@@ -61,6 +62,18 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/edit/{id}',            [DanhMucController::class, 'edit']);
         Route::post('/update',              [DanhMucController::class, 'update']);
     });
+
+    Route::group(['prefix' => '/khu-vuc'], function() {
+        Route::get('/', [KhuVucController::class, 'index']);
+        Route::get('/data', [KhuVucController::class, 'getData']);
+        Route::post('/doi-trang-thai', [KhuVucController::class, 'doiTrangThai']);
+        Route::post('/delete', [KhuVucController::class, 'destroy']);
+        Route::post('/edit', [KhuVucController::class, 'edit']);
+        Route::post('/create', [KhuVucController::class, 'store']);
+        Route::post('/check-slug', [KhuVucController::class, 'checkSlug']);
+        Route::post('/update', [KhuVucController::class, 'update']);
+    });
+
 });
 
 
