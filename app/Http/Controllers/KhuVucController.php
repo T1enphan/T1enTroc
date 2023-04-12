@@ -21,15 +21,14 @@ class KhuVucController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request->all());
         $data = $request->all();
 
-        $check = KhuVuc::where('slug_khu',$request->slug_khu)->first();
-        if($check){
+        $check = KhuVuc::where('slug_khu', $request->slug_khu)->first();
+        if(!$check){
             KhuVuc::create($data);
             return response()->json([
-                'status'    => true ,
-                'message'   => 'đã tạo mới thành công'
+                'status'    => true,
+                'message'   => 'Đã tạo mới thành công!',
             ]);
         }
     }

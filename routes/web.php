@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BanController;
 use App\Http\Controllers\ChuyenMucController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\KhuVucController;
@@ -43,15 +44,6 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/edit/{id}',          [SanPhamController::class, 'edit']);
         Route::post('/update', [SanPhamController::class, 'update']);
     });
-    Route::group(['prefix' => '/tin-tuc'], function() {
-        Route::get('/index',              [TinTucController::class, 'index']);
-        Route::post('/create',            [TinTucController::class, 'store']);
-        Route::get('/data',               [TinTucController::class, 'data']);
-        Route::post('/delete',            [TinTucController::class, 'destroy']);
-        Route::post('/update',            [TinTucController::class, 'update']);
-        Route::get('/doi-trang-thai/{id}',[TinTucController::class, 'doiTrangThai']);
-        Route::get('/change-status/{id}', [TinTucController::class, 'changeStatus']);
-    });
     Route::group(['prefix' => '/danh-muc'], function() {
         Route::get('/index',                [DanhMucController::class,'index']);
         Route::post('/create',              [DanhMucController::class, 'store']);
@@ -62,16 +54,34 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::get('/edit/{id}',            [DanhMucController::class, 'edit']);
         Route::post('/update',              [DanhMucController::class, 'update']);
     });
-
+    Route::group(['prefix' => '/tin-tuc'], function() {
+        Route::get('/index',              [TinTucController::class, 'index']);
+        Route::post('/create',            [TinTucController::class, 'store']);
+        Route::get('/data',               [TinTucController::class, 'data']);
+        Route::post('/delete',            [TinTucController::class, 'destroy']);
+        Route::post('/update',            [TinTucController::class, 'update']);
+        Route::get('/doi-trang-thai/{id}',[TinTucController::class, 'doiTrangThai']);
+        Route::get('/change-status/{id}', [TinTucController::class, 'changeStatus']);
+    });
     Route::group(['prefix' => '/khu-vuc'], function() {
-        Route::get('/', [KhuVucController::class, 'index']);
-        Route::get('/data', [KhuVucController::class, 'getData']);
-        Route::post('/doi-trang-thai', [KhuVucController::class, 'doiTrangThai']);
-        Route::post('/delete', [KhuVucController::class, 'destroy']);
-        Route::post('/edit', [KhuVucController::class, 'edit']);
-        Route::post('/create', [KhuVucController::class, 'store']);
-        Route::post('/check-slug', [KhuVucController::class, 'checkSlug']);
-        Route::post('/update', [KhuVucController::class, 'update']);
+        Route::get('/',                 [KhuVucController::class, 'index']);
+        Route::get('/data',             [KhuVucController::class, 'getData']);
+        Route::post('/doi-trang-thai',  [KhuVucController::class, 'doiTrangThai']);
+        Route::post('/delete',          [KhuVucController::class, 'destroy']);
+        Route::post('/edit',            [KhuVucController::class, 'edit']);
+        Route::post('/create',          [KhuVucController::class, 'store']);
+        Route::post('/check-slug',      [KhuVucController::class, 'checkSlug']);
+        Route::post('/update',          [KhuVucController::class, 'update']);
+    });
+    Route::group(['prefix' => '/ban'], function() {
+        Route::get('/',                  [BanController::class, 'index']);
+        Route::get('/data',              [BanController::class, 'getData']);
+        Route::post('/doi-trang-thai',   [BanController::class, 'doiTrangThai']);
+        Route::post('/delete',           [BanController::class, 'destroy']);
+        Route::post('/edit',             [BanController::class, 'edit']);
+        Route::post('/create',           [BanController::class, 'store']);
+        Route::post('/check-slug',       [BanController::class, 'checkSlug']);
+        Route::post('/update',           [BanController::class, 'update']);
     });
 
 });

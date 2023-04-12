@@ -8,17 +8,11 @@ use Illuminate\Http\Request;
 
 class BanController extends Controller
 {
+
     public function index()
     {
         $khuVuc = KhuVuc::all();
-
-        return view('admin.page.ban.index', compact('khuVuc'));
-    }
-
-    public function index_vue()
-    {
-        $khuVuc = KhuVuc::all();
-        return view('admin.page.ban.index_vue', compact('khuVuc'));
+        return view('admin.page.Ban.index', compact('khuVuc'));
     }
 
     public function getData()
