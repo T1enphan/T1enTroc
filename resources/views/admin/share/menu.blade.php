@@ -48,7 +48,15 @@
                     <div class="parent-icon">
                         <i class="fa-solid fa-store"></i>
                     </div>
-                    <div class="menu-title">Nhập Kho</div>
+                    <div class="menu-title">Chuyên Mục Sản Phẩm</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/danh-muc/index">
+                    <div class="parent-icon">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <div class="menu-title">Danh Mục Bài Viết</div>
                 </a>
             </li>
             <li class="nav-item">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\ChuyenMucController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\HoaDonBanHangController;
 use App\Http\Controllers\KhuVucController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\TestController;
@@ -82,6 +83,24 @@ Route::group(['prefix'=>'/admin'], function(){
         Route::post('/create',           [BanController::class, 'store']);
         Route::post('/check-slug',       [BanController::class, 'checkSlug']);
         Route::post('/update',           [BanController::class, 'update']);
+    });
+    //ban-hang
+    Route::group(['prefix' => '/ban-hang'], function() {
+        Route::get('/', [HoaDonBanHangController::class, 'index']);
+        Route::post('/tao-hoa-don', [HoaDonBanHangController::class, 'store']);
+        Route::post('/find-id-by-idban', [HoaDonBanHangController::class, 'findIdByIdBan']);
+        Route::post('/them-mon-an', [HoaDonBanHangController::class, 'addMonAnChiTietHoaDon']);
+        Route::post('/danh-sach-mon-theo-hoa-don', [HoaDonBanHangController::class, 'getDanhSachMonTheoHoaDon']);
+        Route::post('/update', [HoaDonBanHangController::class, 'update']);
+        Route::post('/in-bep', [HoaDonBanHangController::class, 'InBep']);
+        Route::post('/xoa-chi-tiet', [HoaDonBanHangController::class, 'XoaChiTietDonHang']);
+        Route::post('/chi-tiet/update-chiet-khau', [ChiTietBanHangController::class, 'UpdateChietKhau'])->name('1');
+        Route::post('/danh-sach-mon-theo-id-ban', [ChiTietBanHangController::class, 'getDanhSachMonTheoIdBan'])->name('2');
+        Route::post('/chuyen-mon', [ChiTietBanHangController::class, 'chuyenMonQuaBanKhac'])->name('3');
+        Route::post('/xac-nhan', [HoaDonBanHangController::class, 'xacNhanKhach'])->name('5');
+        Route::post('/thanh-toan', [HoaDonBanHangController::class, 'thanhToan'])->name('6');
+        Route::get('/in-bill/{id}', [HoaDonBanHangController::class, 'inBill']);
+        Route::post('/update-hoa-don', [HoaDonBanHangController::class, 'updateHoaDon'])->name('7');
     });
 
 });
